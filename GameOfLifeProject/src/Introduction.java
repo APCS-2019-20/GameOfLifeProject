@@ -13,249 +13,165 @@ public class Introduction
 		static ArrayList<LifeTileCard> playerTwoLifeTiles = new ArrayList<LifeTileCard>();
 		static ArrayList<Card> playerTwoCards = new ArrayList<Card>();
 
-		static boolean stillPlaying = true;
 		static String playerOneJobChoice;
-		static String playerTwoJobChoice;
+		static String playerTwoJobChoice; 
 
 		public static void greetPlayers()
 			{
+				Runner.screen.updateMessage("Hello, welcome to the Game Of Life. This is a 2 player game.");
+				Runner.screen.updateMessage("Player 1, what is your name?");
+				playerOneName = userInput.next();
+				Runner.screen.updateMessage("Hello " + playerOneName);
+				Runner.players.add(new Player(playerOneName, 10000, 0, 0, playerOneLifeTiles, playerOneCards, false));
+						
+						
+				Runner.screen.updateMessage("Player 2, what is your name?");
+				playerTwoName = userInput.next();
+				Runner.screen.updateMessage("Hello " + playerTwoName);
+				Runner.players.add(new Player(playerTwoName, 10000, 0, 0, playerTwoLifeTiles, playerTwoCards, false));
 
 				
-				String[] s1 = {"Hello, welcome to the Game Of Life. How many players will be playing today?", "", "(2)", "(3)", "(4)"};
-				Runner.screen.updateMessage(s1);
-				String numberOfPlayers = userInput.next();
+				Runner.screen.updateBoard();
 
+				Runner.screen.updateMessage("Okay, it's time to play...");
 
-				if (numberOfPlayers.contentEquals("2"))
+				Runner.screen.updateMessage("The player with the most money at the end of the game wins");
+						
+				Runner.screen.updateMessage("Both players start with $10,000");
+			} 
+		
+		public static void choosePath(String name)
+		{ 
+				String[] s3 = {"To begin the game, " + name + ", would you like to...", "(1) Start your career", "(2) Go to college"};
+				Runner.screen.updateMessage(s3);
+						
+				int playerChoice = intInput.nextInt();
+
+				if (playerChoice == 1)
 					{
-						
-						String[] s2 = {"Great!", "Player 1, what is your name?"};
-						Runner.screen.updateMessage(s2);
-						playerOneName = userInput.next();
-						Runner.screen.updateMessage("Hello " + playerOneName);
-
-						Runner.players.add(new Player(playerOneName, playerOneJobChoice, 10000, 0, 0,
-								playerOneLifeTiles, playerOneCards));
-						
-
-						Runner.screen.updateMessage("Player 2, what is your name?");
-						playerTwoName = userInput.next();
-						Runner.screen.updateMessage("Hello " + playerTwoName);
-
-						Runner.players.add(new Player(playerTwoName, playerTwoJobChoice, 10000, 0, 0,
-								playerTwoLifeTiles, playerTwoCards));
-
-						Runner.screen.updateBoard();
-						
-
-						Runner.screen.updateMessage("Okay, it's time to play...");
-
-						Runner.screen.updateMessage("The player with the most money at the end of the game wins");
-						Runner.screen.updateMessage("Both players start with $10,000");
-
-						
-
-
-						String[] s3 = {"To begin the game, " + playerOneName + ", would you like to...", "(1) Start your career", "(2) Go to college"};
-						Runner.screen.updateMessage(s3);
-						
-					
-						int playerOneChoice = intInput.nextInt();
-
-
-						if (playerOneChoice == 1)
-							{
-							
-								String[] s4 = {"You have chosen to start your career!", "Your board position will be set at 10"};
-								Runner.screen.updateMessage(s4);
-								Runner.players.get(0).setPlaceOnBoard(10);
+						String[] s4 = {"You have chosen to start your career!", "Your board position will be set at 10"};
+						Runner.screen.updateMessage(s4);
+						Runner.players.get(PlayingGame.currentPlayer).setPlaceOnBoard(10);
 								
-								
-								
-
-								String[] s5 = {"Now pick a job you will like to have to start your career...", "None of these jobs require a degree",  "Your choices are:","(1) Artist", "(2) Salesperson" , "(3) Athlete", "(4) Accountant", "(5) Entertainer", "(6) Police Officer", "", "Please type in the number of the job you would like"};
-								Runner.screen.updateMessage(s5);
-								
-								String jobChoice = userInput.next();
-								playerOneJobChoice = jobChoice;
-
-								switch (playerOneJobChoice)
-									{
-									case "1":
-										{
-											String[] s6 = {"You have chosen to become an Artist!", "Your starting salary will be: $50,000"};
-											Runner.screen.updateMessage(s6);
-											Runner.players.get(0).setJobTitle("Artist");
-											break;
-										}
-									case "2":
-										{
-											String[] s7 = {"You have chosen to become an Salesperson!", "Your starting salary will be: $70,000"};
-											Runner.screen.updateMessage(s7);
-											
-											Runner.players.get(0).setJobTitle("Salesperson");
-
-										
-											break;
-
-										}
-									case "3":
-										{
-											
-											String[] s8 = {"You have chosen to become an Athlete!", "Your starting salary will be: $100,000"};
-											Runner.screen.updateMessage(s8);
-											
-											
-											Runner.players.get(0).setJobTitle("Athlete");
-
-											
-											break;
-										}
-									case "4":
-										{
-											
-											String[] s9 = {"You have chosen to become an Accountant!", "Your starting salary will be: $90,000"};
-											Runner.screen.updateMessage(s9);
-											
-											Runner.players.get(0).setJobTitle("Accountant");
-
-											
-											break;
-
-										}
-									case "5":
-										{
-											
-											String[] s10 = {"You have chosen to become an Entertainer!", "Your starting salary will be: $80,000"};
-											Runner.screen.updateMessage(s10);
-											
-											Runner.players.get(0).setJobTitle("Entertainer");
-
-											
-											break;
-
-										}
-									case "6":
-										{
-											
-											String[] s11 = {"You have chosen to become an Police Officer!", "Your starting salary will be: $70,000"};
-											Runner.screen.updateMessage(s11);
-											
-											
-											Runner.players.get(0).setJobTitle("Police Officer");
-
-											break;
-
-										}
-									}
-
-							} else if (playerOneChoice == 2)
-							{
-								Runner.screen.updateMessage("You have chosen to go to college!");
-
+						String[] s5 = {"Now pick a job you would like to have to start your career...", "None of these jobs require a degree"};
+						Runner.screen.updateMessage(s5);
+						
+						
+						ArrayList<CareerCard> noDegreeCareers = new ArrayList<CareerCard>(); 
+						
+						for(int j = 0; j < AllCareers.allCareers.size(); j++)
+						{ 
+							if(!AllCareers.allCareers.get(j).isDegree())
+							{ 
+								CareerCard tempCareerCardOne = AllCareers.allCareers.get(j); 
+								noDegreeCareers.add(tempCareerCardOne); 
 							}
+						}
+							
+						
+						ArrayList<String> noDegreeCareerNames = new ArrayList<String>(); 
+						
+						int counter = 1; 
+						
+						for(int i = 0; i < AllCareers.allCareers.size(); i++)
+						{
+							if(!AllCareers.allCareers.get(i).isDegree())
+							{ 
+								CareerCard tempCareerCard = AllCareers.allCareers.get(i); 
+								noDegreeCareerNames.add("(" + counter + ") " + tempCareerCard.getName()); 
+								counter++; 
+								
+							}
+						}
+						
+						
+						String[] names = new String[10]; 
+								
+						for(int i = 0; i < noDegreeCareerNames.size(); i++)
+						{
+							names[i] = noDegreeCareerNames.get(i); 
+						}
+						
+						Runner.screen.updateMessage(names);
+						
+						int chosenCareer = intInput.nextInt(); 
+						
+						String careerName = names[chosenCareer-1]; 
+						
+						Runner.screen.updateMessage("Great! You chose a career in the " + careerName + " industry.");
+						
+						CareerCard careerToAdd = noDegreeCareers.get(chosenCareer-1); 
+						
+						Runner.players.get(PlayingGame.currentPlayer).getPlayersCards().add(careerToAdd); 
 
-
-						String[] s12 = {"Now, " + playerTwoName + ", would you like to...", "(1) Start your career", "(2) Go to college"};
-						Runner.screen.updateMessage(s12);
-						
-						int playerTwoChoice = userInput.nextInt();
-						
-						
-						if (playerTwoChoice == 1)
+																	
+							}
+				
+				else if (playerChoice == 2)
 							{
-							String[] s13 = {"You have chosen to start your career!", "Your board position will be set at 10"};
-							Runner.screen.updateMessage(s13);
-							Runner.players.get(1).setPlaceOnBoard(10);
+								Runner.players.get(PlayingGame.currentPlayer).setDegree(true);
+								
+								Runner.screen.updateMessage("You have chosen to go to college!");
 							
-							
-							
-
-							String[] s5 = {"Now pick a job you will like to have to start your career...", "None of these jobs require a degree",  "Your choices are:","(1) Artist", "(2) Salesperson" , "(3) Athlete", "(4) Accountant", "(5) Entertainer", "(6) Police Officer", "", "Please type in the number of the job you would like"};
-							Runner.screen.updateMessage(s5);
-							
-							String jobChoice2 = userInput.next();
-							playerTwoJobChoice = jobChoice2;
-
-							switch (playerTwoJobChoice)
-								{
-								case "1":
-
-									{
-										String[] s6 = {"You have chosen to become an Artist!", "Your starting salary will be: $50,000"};
-										Runner.screen.updateMessage(s6);
-										Runner.players.get(1).setJobTitle("Artist");
-										break;
-									}
-								case "2":
-									{
-										String[] s7 = {"You have chosen to become an Salesperson!", "Your starting salary will be: $70,000"};
-										Runner.screen.updateMessage(s7);
-										
-										Runner.players.get(1).setJobTitle("Salesperson");
-
-									
-										break;
-
-									}
-								case "3":
-									{
-										
-										String[] s8 = {"You have chosen to become an Athlete!", "Your starting salary will be: $100,000"};
-										Runner.screen.updateMessage(s8);
-										
-										
-										Runner.players.get(1).setJobTitle("Athlete");
-
-										
-										break;
-									}
-								case "4":
-									{
-										
-										String[] s9 = {"You have chosen to become an Accountant!", "Your starting salary will be: $90,000"};
-										Runner.screen.updateMessage(s9);
-										
-										Runner.players.get(1).setJobTitle("Accountant");
-
-										
-										break;
-
-									}
-								case "5":
-									{
-										
-										String[] s10 = {"You have chosen to become an Entertainer!", "Your starting salary will be: $80,000"};
-										Runner.screen.updateMessage(s10);
-										
-										Runner.players.get(1).setJobTitle("Entertainer");
-
-										
-										break;
-
-									}
-								case "6":
-									{
-										
-										String[] s11 = {"You have chosen to become an Police Officer!", "Your starting salary will be: $70,000"};
-										Runner.screen.updateMessage(s11);
-										
-										
-										Runner.players.get(1).setJobTitle("Police Officer");
-
-										break;
-
+								Runner.screen.updateMessage("Here is a loan of $40,000, which you must pay back at the end of the game!"); 
+								
+								Runner.screen.updateMessage("Choose a career for after college!");
+								
+								
+								Runner.players.get(PlayingGame.currentPlayer).setTotalLoans(40000);
+								
+								ArrayList<CareerCard> degreeCareers = new ArrayList<CareerCard>(); 
+								
+								for(int j = 0; j < AllCareers.allCareers.size(); j++)
+								{ 
+									if(AllCareers.allCareers.get(j).isDegree())
+									{ 
+										CareerCard tempCareerCardOne = AllCareers.allCareers.get(j); 
+										degreeCareers.add(tempCareerCardOne); 
 									}
 								}
+									
+								
+								ArrayList<String> degreeCareerNames = new ArrayList<String>(); 
+								
+								int counter = 1; 
+								
+								for(int i = 0; i < AllCareers.allCareers.size(); i++)
+								{
+									if(AllCareers.allCareers.get(i).isDegree())
+									{ 
+										CareerCard tempCareerCard = AllCareers.allCareers.get(i); 
+										degreeCareerNames.add("(" + counter + ") " + tempCareerCard.getName()); 
+										counter++; 
+										
+									}
+								}
+								
+								
+								String[] names = new String[14]; 
+										
+								for(int i = 0; i < degreeCareerNames.size(); i++)
+								{
+									names[i] = degreeCareerNames.get(i); 
+								}
+								
+								Runner.screen.updateMessage(names);
+								
+								int chosenCareer = intInput.nextInt(); 
+								
+								String careerName = names[chosenCareer-1]; 
+								
+								Runner.screen.updateMessage("Great! You chose a career in the " + careerName + " industry.");
+								
+								CareerCard careerToAdd = degreeCareers.get(chosenCareer-1); 
+								
+								Runner.players.get(PlayingGame.currentPlayer).getPlayersCards().add(careerToAdd); 
 
-						} else if (playerTwoChoice == 2)
-						{
-							Runner.screen.updateMessage("You have chosen to go to college!");
-
+							}
 						}
 					}
 
-			}
+			
 
 //		public static void playGame()
 //			{
@@ -291,4 +207,4 @@ public class Introduction
 
 		// test
 
-	}
+

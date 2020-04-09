@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Screen {
-	
+public class Screen 
+{ 
 protected int screenHeight;
 protected int screenWidth;
 protected int boardDistanceToLeft;
@@ -159,7 +159,7 @@ protected boolean setupBoard;
 			updateScreen();
 			}
 			setupScreen = false;
-			pause(2.5);
+			pause(5.0);
 	}
 	
 	public void updateScreen() {

@@ -4,35 +4,45 @@ import java.util.List;
 public class Player
 	{
 		private String name;
-		private String jobTitle;
+		//private String jobTitle;
 		private int totalMoney;
 		private int totalLoans;
 		private int placeOnBoard;
+		private boolean degree; 
 		
 		private ArrayList<LifeTileCard> playersLifeTiles = new ArrayList<LifeTileCard>();
 		private ArrayList<Card> playersCards = new ArrayList<Card>();
 
-		public Player(String n, String jt, int tM, int tL, int p, ArrayList<LifeTileCard> pL, ArrayList<Card> pC)
+		public Player(String n,/* String jt*/ int tM, int tL, int p, ArrayList<LifeTileCard> pL, ArrayList<Card> pC, boolean d)
 			{
 				name = n;
-				jobTitle = jt;
+				//jobTitle = jt;
 				totalMoney = tM;
 				totalLoans = tL;
 				placeOnBoard = p;
 				playersLifeTiles = pL;
 				playersCards = pC;
+				degree = d; 
 
 			}
 
-		public String getJobTitle()
-			{
-				return jobTitle;
-			}
+//		public String getJobTitle()
+//			{
+//				return jobTitle;
+//			}
+//
+//		public void setJobTitle(String jobTitle)
+//			{
+//				this.jobTitle = jobTitle;
+//			}
 
-		public void setJobTitle(String jobTitle)
-			{
-				this.jobTitle = jobTitle;
-			}
+		public boolean isDegree() {
+			return degree;
+		}
+
+		public void setDegree(boolean degree) {
+			this.degree = degree;
+		}
 
 		public String getName()
 			{

@@ -1,12 +1,14 @@
-public class Career {
+public class CareerCard extends Card
+{
 	
 	private String name;
 	private int salary;
 	private int promoSalary;
 	private boolean degree;
 	
-	public Career(String n,int s, int pS,boolean d) 
+	public CareerCard(String t, String n,int s, int pS,boolean d) 
 	{
+		super(t); 
 		name=n;
 		salary=s;
 		promoSalary=pS;
